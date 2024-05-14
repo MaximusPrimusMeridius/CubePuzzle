@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class CollisionDetection : MonoBehaviour
 {
-    [SerializeField] private LayerMask _layerMask;
-    [SerializeField] private float _rayCastLength = 1;
+    [SerializeField] private LayerMask m_layerMask;
+    [SerializeField] private float m_rayCastLength = 1;
     private PlayerInput _playerInput;
 
     public event Action OnObstacleHit;
@@ -19,7 +19,7 @@ public class CollisionDetection : MonoBehaviour
 
         if(inputDirection != Vector3.zero)
         {
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, _rayCastLength, _layerMask))
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, m_rayCastLength, m_layerMask))
             {
                 switch (hitInfo.collider.gameObject.layer)
                 {
@@ -34,6 +34,6 @@ public class CollisionDetection : MonoBehaviour
             }
         }
 
-        Debug.DrawLine(ray.origin, ray.origin + inputDirection, Color.red);
+        Debug.DrawLine(ray.origin, ray.origin + inputDirection * m_rayCastLength, Color.red);
     }
 }

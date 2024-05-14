@@ -2,24 +2,22 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Transform _moveToPoint;
-    [SerializeField] private float _movementSpeed = 3f;
-    [SerializeField] private float _moveToPointDistance = 1f;
+    [SerializeField] private float m_movementSpeed = 3f;
 
     private PlayerInput _playerInput;
     private CollisionDetection _collisionDetection;
-    private Vector3 _nextPosition;
-    private bool _stoppedMovement;
 
-    void OnEnable()
-    {
-        _collisionDetection.OnObstacleHit += StopMovement;
-    }
+    private Vector3 _targetPosition;
+    private Vector3 _startPosition;
 
-    private void OnDisable()
-    {
-        _collisionDetection.OnObstacleHit -= StopMovement;
-    }
+    private bool _canMove;
+    private bool _isMoving;
+
+    public bool IsMoving { get { return _isMoving; } }
+
+    void OnEnable() => _collisionDetection.OnObstacleHit += StopMovement;
+
+    void OnDisable() => _collisionDetection.OnObstacleHit -= StopMovement;
 
     void Awake()
     {
@@ -27,34 +25,37 @@ public class PlayerMovement : MonoBehaviour
         _collisionDetection = GetComponent<CollisionDetection>();
     }
 
-    void Start()
-    {
-        _nextPosition = transform.position;
-    }
+    void Start() => _startPosition = transform.position;
 
     void Update()
     {
-        Vector3 horizontalMovement = new Vector3(_playerInput.HorizontalInput, 0f, 0f);
-        Vector3 verticalMovement = new Vector3(0f, 0f, _playerInput.VerticalInput);
+        Vector3 horizontalDirection = new Vector3(_playerInput.HorizontalInput, 0f, 0f);
+        Vector3 verticalDirection = new Vector3(0f, 0f, _playerInput.VerticalInput);
 
-
-        if (Vector3.Distance(transform.position, _nextPosition) == 0f && _stoppedMovement == false)
+        if(Vector3.Distance(transform.position, _startPosition) == 0f 
+            && _isMoving == false 
+            && _canMove == false)
         {
-            if (_playerInput.HorizontalInput != 0f)
+            _targetPosition = _startPosition;
+
+            if(horizontalDirection.x != 0)
             {
-                _moveToPoint.localPosition = horizontalMovement * _moveToPointDistance;
+                _targetPosition = transform.position + horizontalDirection;
+                _isMoving = true;
             }
             else
             {
-                _moveToPoint.localPosition = verticalMovement * _moveToPointDistance;
+                _targetPosition = transform.position + verticalDirection;
+                _isMoving = true;
             }
 
-            _nextPosition = _moveToPoint.position;
+            _startPosition = _targetPosition;
+            _isMoving = false;
         }
-        
-        transform.position = Vector3.MoveTowards(transform.position, _nextPosition, _movementSpeed * Time.deltaTime);
-        _stoppedMovement = false;
+
+        transform.position = Vector3.MoveTowards(transform.position, _startPosition, m_movementSpeed * Time.deltaTime);
+        _canMove = false;
     }
 
-    private void StopMovement() => _stoppedMovement = true;
+    private void StopMovement() => _canMove = true;
 }

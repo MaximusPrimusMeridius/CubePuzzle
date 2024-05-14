@@ -146,7 +146,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8660426992245432912}
-  - component: {fileID: 4379522189276190831}
+  - component: {fileID: 7628861654260970786}
+  - component: {fileID: -1093376432657239392}
   - component: {fileID: 4743478543099379218}
   - component: {fileID: 6693356113449587967}
   - component: {fileID: 5993506834541579247}
@@ -174,7 +175,20 @@ Transform:
   - {fileID: 5348146166964173679}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4379522189276190831
+--- !u!114 &7628861654260970786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739296548423023247}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a44886647773d244b8855e201cfe5a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_movementSpeed: 6
+--- !u!114 &-1093376432657239392
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,12 +197,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7739296548423023247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a44886647773d244b8855e201cfe5a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 73210636de6aaec43a694c76854f93d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveToPoint: {fileID: 5348146166964173679}
-  _movementSpeed: 3
-  _moveToPointDistance: 1
+  m_movementSpeed: 6
 --- !u!114 &4743478543099379218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,10 +213,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6ba134324f3ad7438be4c33d36656fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _layerMask:
+  m_layerMask:
     serializedVersion: 2
-    m_Bits: 832
-  _rayCastLength: 1
+    m_Bits: 64
+  m_rayCastLength: 1
 --- !u!114 &6693356113449587967
 MonoBehaviour:
   m_ObjectHideFlags: 0
