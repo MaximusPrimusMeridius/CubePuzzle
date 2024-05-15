@@ -3,11 +3,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float m_movementSpeed = 3f;
+    [SerializeField] private Transform m_targetPosition;
 
     private PlayerInput _playerInput;
     private CollisionDetection _collisionDetection;
 
-    private Vector3 _targetPosition;
     private Vector3 _startPosition;
 
     private bool _canMove;
@@ -34,28 +34,27 @@ public class PlayerMovement : MonoBehaviour
 
         if(Vector3.Distance(transform.position, _startPosition) == 0f 
             && _isMoving == false 
-            && _canMove == false)
+            && _canMove == true)
         {
-            _targetPosition = _startPosition;
-
             if(horizontalDirection.x != 0)
             {
-                _targetPosition = transform.position + horizontalDirection;
+                m_targetPosition.position = transform.position + horizontalDirection;
                 _isMoving = true;
             }
             else
             {
-                _targetPosition = transform.position + verticalDirection;
+                m_targetPosition.position = transform.position + verticalDirection;
                 _isMoving = true;
             }
 
-            _startPosition = _targetPosition;
+            _startPosition = m_targetPosition.position;
             _isMoving = false;
         }
-
+        
+        m_targetPosition.position = _startPosition;
         transform.position = Vector3.MoveTowards(transform.position, _startPosition, m_movementSpeed * Time.deltaTime);
-        _canMove = false;
+        _canMove = true;
     }
 
-    private void StopMovement() => _canMove = true;
+    private void StopMovement() => _canMove = false;
 }
